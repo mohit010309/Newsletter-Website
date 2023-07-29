@@ -1,0 +1,27 @@
+<%- include('./partials/header') -%>
+
+<body class="d-flex align-items-center py-4 bg-body-tertiary">
+    
+<main class="form-signin w-100 m-auto">
+  <form action="/" method="post">
+    <i style="margin-bottom:30px;" class="fa-solid fa-newspaper fa-2xl"></i>
+    <h1 class="h3 mb-3 fw-normal">Sign In</h1>
+
+    <div class="form-floating">
+      <input name="email" type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+      <label for="floatingInput">Email address</label>
+    </div>
+    <div class="form-floating">
+      <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+      <label for="floatingPassword">Password</label>
+    </div>
+
+    <button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
+
+  </form>
+</main>
+<script src="/docs/5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+
+</body>
+
+<%- include('./partials/footer') -%>
