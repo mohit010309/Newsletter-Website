@@ -63,15 +63,17 @@ app.listen(3000,function(){
     console.log("Server is running on port 3000");
 });
 
+// get the home page
 app.get("/",function(req,res){
     res.render("home",{pageName:"Sign In"});
 });
 
+// get the user page
 app.get("/user",function(req,res){
     if(login===true)
     {
         //const query="select * from news";
-        const query1="select news_id as id,news_name as name from usernews where user_id in (select id from users where email=?)";
+        const query1="select user_id as uid,news_id as id,news_name as name from usernews where user_id in (select id from users where email=?)";
         connection.query(query1,[userEmail],function(err,results1,fields){
             const query2="select id,name from news where id not in (select news_id from usernews where user_id in(select id from users where email=?))";
             connection.query(query2,[userEmail],function(err,results2,fields){
@@ -87,6 +89,7 @@ app.get("/user",function(req,res){
         res.redirect("/");
 });
 
+// login the user
 app.post("/",function(req,res){
     const email=req.body.email;
     const password=req.body.password;
@@ -163,5 +166,14 @@ app.post("/subscribe",function(req,res){
             console.log("Newsletter subscribed for user !");
             res.redirect("/user");
         });
+    });
+});
+
+// unsubscribe newsletter route
+app.post("/unsubscribe",function(req,res){
+    const query="delete from usernews where user_id=? and news_id=?";
+    connection.query(query,[req.body.userID,req.body.newsID],function(err,results,fields){
+        console.log("Newsletter unsubscribed !");
+        res.redirect("/user");
     });
 });

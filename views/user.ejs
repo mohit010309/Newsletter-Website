@@ -24,7 +24,13 @@
             <p>No Newsletters subscribed !</p>
         <%}else{%>
             <%subNews.forEach(function(data){%>
-                <p><%=data.name%></p>
+                <p>
+                    <form action="/unsubscribe" method="post">
+                        <input type="hidden" name="userID" value="<%=data.uid%>"/>
+                        <input type="hidden" name="newsID" value="<%=data.id%>"/>
+                        <button class="btn btn-danger me-3">Unsubscribe</button><%=data.name%>
+                    </form>
+                </p>
             <%});%>
         <%}%>
     </div>
@@ -41,9 +47,9 @@
                     <form action="/subscribe" method="post">
                         <input type="hidden" name="newsID" value="<%=data.id%>"/>
                         <input type="hidden" name="newsName" value="<%=data.name%>"/>
-                        <button class="btn btn-primary me-3">Subscribe</button>
-                    </form><%=data.name%>
-                </p>
+                        <button class="btn btn-primary me-3">Subscribe</button><%=data.name%>
+                    </form>
+                </p> 
             <%});%>
         <%}%>
     </div>
