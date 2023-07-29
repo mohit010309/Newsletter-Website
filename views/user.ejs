@@ -32,7 +32,13 @@
             <p>No Newsletters Available !</p>
         <%}else{%>
             <%availNews.forEach(function(data){%>
-                <p><button class="btn btn-primary me-3">Subscribe</button><%=data.name%></p>
+                <p>
+                    <form action="/subscribe" method="post">
+                        <input type="hidden" name="newsID" value="<%=data.id%>"/>
+                        <input type="hidden" name="newsName" value="<%=data.name%>"/>
+                        <button class="btn btn-primary me-3">Subscribe</button>
+                    </form><%=data.name%>
+                </p>
             <%});%>
         <%}%>
     </div>

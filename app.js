@@ -70,7 +70,7 @@ app.get("/",function(req,res){
 app.get("/user",function(req,res){
     if(login===true)
     {
-        const query="select name from news";
+        const query="select * from news";
         connection.query(query,function(err,results,fields){
             res.render("user",{pageName:"User Dashboard",userEmail:userEmail,availNews:results});
         });
@@ -138,5 +138,22 @@ app.post("/addNewsletter",function(req,res){
 app.post("/logout",function(req,res){
     login=false;
     userEmail="";
+    userId=-1;
     res.redirect("/");
+});
+
+// subscribe newsletter route
+app.post("/subscribe",function(req,res){
+    const newsID = req.body.newsID;
+    const newsName = req.body.newsName;
+
+    // find the user ID from database
+    const query1="select id from users where email=?";
+    connection.query(query1,[userEmail],function(err,results,fields){
+        const query2="insert into usernews values(?,?,?)";
+        connection.query(query2,[results[0].id,newsID,newsName],function(err,results,fields){
+            console.log("Newsletter subscribed for user !");
+            res.redirect("/user");
+        });
+    });
 });
