@@ -20,8 +20,13 @@
     <div class="container" id="containers">
         <hr class="my-4">
         <h2 class="mt-4">Subscribed Newsletters</h2>
-        <p>Currently No Subscription</p>
-        <p>Currently No Subscription</p>
+        <%if(subNews.length===0){%>
+            <p>No Newsletters subscribed !</p>
+        <%}else{%>
+            <%subNews.forEach(function(data){%>
+                <p><%=data.name%></p>
+            <%});%>
+        <%}%>
     </div>
 
     <div class="container" id="containers">

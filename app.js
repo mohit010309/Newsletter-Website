@@ -70,10 +70,18 @@ app.get("/",function(req,res){
 app.get("/user",function(req,res){
     if(login===true)
     {
-        const query="select * from news";
-        connection.query(query,function(err,results,fields){
-            res.render("user",{pageName:"User Dashboard",userEmail:userEmail,availNews:results});
+        //const query="select * from news";
+        const query1="select news_id as id,news_name as name from usernews where user_id in (select id from users where email=?)";
+        connection.query(query1,[userEmail],function(err,results1,fields){
+            const query2="select id,name from news where id not in (select news_id from usernews where user_id in(select id from users where email=?))";
+            connection.query(query2,[userEmail],function(err,results2,fields){
+                console.log(results2);
+                res.render("user",{pageName:"User Dashboard",userEmail:userEmail,subNews:results1,availNews:results2});
+            });
         });
+        // connection.query(query,function(err,results,fields){
+        //     res.render("user",{pageName:"User Dashboard",userEmail:userEmail,availNews:results});
+        // });
     }
     else
         res.redirect("/");
